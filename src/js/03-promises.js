@@ -11,7 +11,7 @@ function callback(event) {
   let formStepValue = Number(form.elements.step.value);
 
   for (let i = 0; i < formAmountValue; i++) {
-    let position = i;
+    let position = i+1;
     let delay = formDelayValue + formStepValue * i;
 
     let promise = createPromise(position, delay);
@@ -23,6 +23,7 @@ function callback(event) {
         Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
   }
+  form.reset()
 }
 
 function createPromise(position, delay) {

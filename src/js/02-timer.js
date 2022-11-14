@@ -13,7 +13,7 @@ const spanMinutesValue = document.querySelector('span[data-minutes]');
 const spanSecondsValue = document.querySelector('span[data-seconds]');
 
 toggleElement(btnStart, false);
-
+let setIntervalId;
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -43,10 +43,10 @@ function toggleElement(element, value) {
 }
 
 btnStart.addEventListener('click', buttonClick);
-
+ 
 function buttonClick() {
   callbackInterval();
-  setInterval(callbackInterval, 1000);
+  setIntervalId = setInterval(callbackInterval, 1000);
 
   toggleElement(input, false);
   toggleElement(btnStart, false);
@@ -55,6 +55,11 @@ function buttonClick() {
 function callbackInterval() {
   const currentTimeMs = Date.now();
   const ms = selectedDate.getTime() - currentTimeMs;
+  if (ms <= 0 ){
+    clearInterval(setIntervalId);
+    return;
+  }
+  
 
   const { days, hours, minutes, seconds } = convertMs(ms);
 
